@@ -8,7 +8,7 @@ function Profile() {
         <div className=" min-h-svh w-full bg-mainBg relative">
             <div
                 className=" w-full flex flex-col justify-center drop-shadow-lg bg-cover md:bg-center md:items-center relative"
-                style={{height: '50svh'}}
+                style={{ height: '50svh' }}
             >
                 {/* Overlay para escurecer a imagem de fundo */}
                 <div className="absolute inset-0 bg-black opacity-50"></div>
@@ -23,11 +23,19 @@ function Profile() {
             </div>
             <div className="w-full">
                 <h1 className="text-black font-bold text-center text-2xl py-7">
-                   {myProfile ? "Minhas fotos" : "Fotos Populares" } 
+                    {myProfile ? "Minhas fotos" : "Fotos Populares"}
                 </h1>
-                
+
             </div>
+            {myProfile ? (
+                <div className="fixed w-full flex flex-col justify-end items-end top-3/4">
+                    <button className=" mr-5 size-16 rounded-full bg-white">add</button>
+                </div>
+            ) : null}
+
+
         </div>
+
     )
 }
 
