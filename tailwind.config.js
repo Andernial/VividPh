@@ -7,7 +7,8 @@ export default {
   theme: {
     extend: {
       colors: {
-        'mainBg':'#F2E8B3'
+        'mainBg':'#F2E8B3',
+        'hoverColor':"#72F2C3"
       },
     },
   },

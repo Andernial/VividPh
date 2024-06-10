@@ -1,10 +1,10 @@
-import PhotoBackGround from "../assets/images/background-sky.jpeg"
+import PhotoBackGround from "../../assets/images/background-sky.jpeg"
 
 function Home() {
     return (
-        <div className="h-screen w-full bg-mainBg relative">
+        <div className="h-svh w-full bg-mainBg relative">
         <div
-          className="h-3/6 w-full flex flex-col justify-center drop-shadow-lg md:bg-cover md:bg-center md:items-center relative"
+          className="h-3/6 w-full flex flex-col justify-center drop-shadow-lg bg-cover md:bg-center md:items-center relative"
           style={{ backgroundImage: `url(${PhotoBackGround})` }}
         >
           {/* Overlay para escurecer a imagem de fundo */}
@@ -16,11 +16,11 @@ function Home() {
             <p className="w-64 md:w-auto md:text-xl">
               Navegue pelas publicações de outros membros, descubra novas músicas, e inspire-se com a criatividade da nossa comunidade.
             </p>
-            <button className="bg-gray-400 text-sm rounded p-2 w-32">Junte-se a nós!</button>
+            <button className="bg-gray-400 transition duration-700 ease-in-out text-sm rounded p-2 w-32 hover:bg-gray-700 hover:scale-110 md:p-3 md:text-lg md:w-52">Junte-se a nós!</button>
           </div>
           
         </div>
-        <div className="h-full">
+        <div className="">
             <h1 className="text-black font-bold text-2xl p-7">
                 Fotos Populares
             </h1>

@@ -1,17 +1,21 @@
+import { BrowserRouter } from 'react-router-dom'
 import './App.css'
 import Header from './components/Header'
 import NavContextProvider from './context/NavContext'
-import Home from './pages/home'
+import IndexRouter from './routes/router'
 
 function App() {
 
   return (
     <>
-      <NavContextProvider>
-        <Header />
-        <Home />
-      </NavContextProvider>
-      
+      <BrowserRouter>
+        <NavContextProvider>
+          <Header />
+          <IndexRouter />
+        </NavContextProvider>
+      </BrowserRouter>
+
+
     </>
   )
 }
