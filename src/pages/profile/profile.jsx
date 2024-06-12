@@ -8,9 +8,11 @@ import { AdvancedImage } from "@cloudinary/react";
 import CreateModal from "../../components/CreateModal";
 import { auto } from "@cloudinary/url-gen/actions/resize";
 import { autoGravity } from "@cloudinary/url-gen/qualifiers/gravity";
+import { YoutubePlayerContext } from "../../context/YoutublePlayerContext";
 
 function Profile() {
-    const { postModalOpen, togglePostModal } = useContext(ModalsContext)
+    const { postModalOpen, togglePostModal, navOpen } = useContext(ModalsContext)
+    const { togglePlayer } = useContext(YoutubePlayerContext)
     const myProfile = true
     const cloudName = import.meta.env.VITE_CLOUD_NAME
 
@@ -23,6 +25,10 @@ function Profile() {
 
     const myImage = cld.image('ud6cefpbtatpo0pbfret').resize(auto().gravity(autoGravity()).width(200).height(200));
 
+    const handlePostModal = () => {
+        togglePlayer('')
+        togglePostModal()
+    }
 
     return (
         <>
@@ -54,10 +60,12 @@ function Profile() {
 
                 </div>
                 {myProfile ? (
-                    <div className="fixed w-full flex flex-col justify-end items-end z-40 top-3/4">
+                    <div className={`fixed w-full flex flex-col transition duration-200 scale-100 justify-end items-end z-20 top-3/4 ${postModalOpen ? 'invisible' : null}`}>
                         <button
                             className="flex justify-center items-center mr-5 size-16 rounded-full transition duration-500 ease-in-out bg-white border-2 border-black hover:bg-slate-300"
-                            onClick={togglePostModal}
+                            onClick={()=>setTimeout(()=>{
+                                handlePostModal()
+                            },400)}
                         >
                             <FaPlus />
                         </button>

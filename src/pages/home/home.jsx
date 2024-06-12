@@ -11,7 +11,7 @@ function Home() {
           <div className="absolute inset-0 bg-black opacity-50"></div>
   
           {/* Conteúdo sobre a imagem */}
-          <div className="flex flex-col gap-5 text-white pl-5 pt-7 z-20 md:pl-0">
+          <div className="flex flex-col gap-5 text-white pl-5 pt-7 z-30 md:pl-0">
             <h1 className="text-xl md:text-5xl font-bold">Explore sua criatividade!</h1>
             <p className="w-64 md:w-auto md:text-xl">
               Navegue pelas publicações de outros membros, descubra novas músicas, e inspire-se com a criatividade da nossa comunidade.

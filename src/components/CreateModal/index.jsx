@@ -1,14 +1,19 @@
-import { useRef, useState } from "react"
+import { useContext, useRef, useState } from "react"
 import { FetchApi } from "../../utils/Fetch"
 import YouTubeAudioPlayer from "../YoutubeAudioPlayer"
 import { FaPlay } from "react-icons/fa";
+import { FaPause } from "react-icons/fa";
+import { YoutubePlayerContext } from "../../context/YoutublePlayerContext";
 
+import LoadingSvg from "../../assets/images/loading.svg";
 
 function CreateModal() {
     const [displayFile, setDisplayFile] = useState(null)
     const [videoUrl, setVideoUrl] = useState('')
+    const [renderVideo, setRenderVideo] = useState(false)
     const [formItem, setFormItem] = useState(null)
     const [error, setError] = useState('')
+    const { videoPlaying, togglePlayer, loadingPlayer } = useContext(YoutubePlayerContext)
     const cloudName = import.meta.env.VITE_CLOUD_NAME
     const postForm = useRef(null)
 
@@ -29,16 +34,15 @@ function CreateModal() {
 
     const selectvideo = (e) => {
         e.preventDefault()
-        setVideoUrl('')
+
+
         const url = postForm.current.url.value
         const cleanUrl = url.split('v=')[1]
-        // const formData = { url }
-
+        if (cleanUrl === videoUrl) { return alert('Url Identica') }
+        togglePlayer('')
+        setVideoUrl(cleanUrl)
         console.log(cleanUrl)
-        setTimeout(()=>{
-            setVideoUrl(cleanUrl)
-        },300)
-       
+
     }
 
 
@@ -55,7 +59,7 @@ function CreateModal() {
 
 
     return (
-        <div className="fixed h-svh w-full flex flex-col items-center z-40" style={{ backgroundColor: "rgba(0, 0, 0, 0.355)" }}>
+        <div className="fixed h-svh w-full flex flex-col items-center z-30" style={{ backgroundColor: "rgba(0, 0, 0, 0.355)" }}>
             <div className="bg-white flex flex-col justify-center items-center  w-full" style={{ minHeight: '50%', maxHeight: 'fit-content' }}>
                 <form ref={postForm} onSubmit={(e) => selectvideo(e)} className="flex flex-col justify-center items-center gap-3">
                     <label htmlFor="titulo">Título</label>
@@ -66,15 +70,23 @@ function CreateModal() {
 
                     {error ? <p className=" text-red-600">{error}</p> : null}
                     <div className="size-60 border-2 border-black" id="video">
-                        {videoUrl ? (
-                            <>
+
+                        <>
                             <div className="flex flex-col h-full justify-center items-center">
-                            <YouTubeAudioPlayer videoId={videoUrl} />
-                            <FaPlay />
+                                {loadingPlayer ? (
+                                    <div className='fixed w-full h-full flex flex-col justify-center items-center'>
+                                        <img src={LoadingSvg} alt="Carregando" className='size-8' />
+                                    </div>
+                                ) : null}
+                                {renderVideo ? (<YouTubeAudioPlayer videoId={videoUrl} />) : null}
+                                {videoPlaying === 'playing' ? <FaPause onClick={() => togglePlayer('paused')} className="fixed cursor-pointer" /> : null}
+                                {videoPlaying === 'paused' ? <FaPlay onClick={() => togglePlayer('playing')} className="fixed cursor-pointer" /> : null}
+                                {displayFile ? <img src={displayFile} className="h-full w-full border-2 border-black" /> : null}
                             </div>
-                            </>       
-                        ) : null}
-                        {displayFile ? <img src={displayFile} className="h-full w-full border-2 border-black" /> : null}
+
+                        </>
+
+
                     </div>
                     <input type="file" accept="image/*" onChange={(e) => { selectImage(e.target.files) }} />
                     <button className="p-1 bg-slate-300 border-1 border-black m-1" type="submit">Enviar</button>

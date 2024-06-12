@@ -3,6 +3,7 @@ import './App.css'
 import Header from './components/Header'
 import IndexRouter from './routes/router'
 import ModalProvider from './context/ModalsContext'
+import YoutubePlayerContextProvider from './context/YoutublePlayerContext'
 
 function App() {
 
@@ -11,12 +12,15 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <ModalProvider>
-          <Header />
-          <IndexRouter />
-        </ModalProvider>
+        <YoutubePlayerContextProvider>
 
 
+          <ModalProvider>
+            <Header />
+            <IndexRouter />
+          </ModalProvider>
+
+        </YoutubePlayerContextProvider>
       </BrowserRouter>
 
 
