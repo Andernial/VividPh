@@ -9,9 +9,10 @@ import CreateModal from "../../components/CreateModal";
 import { auto } from "@cloudinary/url-gen/actions/resize";
 import { autoGravity } from "@cloudinary/url-gen/qualifiers/gravity";
 import { YoutubePlayerContext } from "../../context/YoutublePlayerContext";
+import PostModal from "../../components/PostModal";
 
 function Profile() {
-    const { postModalOpen, togglePostModal, navOpen } = useContext(ModalsContext)
+    const { postModalOpen, togglePostModal, navOpen, viewPostModal,toggleViewPostModal, selectPostData} = useContext(ModalsContext)
     const { togglePlayer } = useContext(YoutubePlayerContext)
     const myProfile = true
     const cloudName = import.meta.env.VITE_CLOUD_NAME
@@ -30,8 +31,16 @@ function Profile() {
         togglePostModal()
     }
 
+    const handleViewPostModal = (authorId,authorName,title,music,image) =>{
+        toggleViewPostModal()
+        selectPostData(authorId,authorName,title,music,image)
+    }
+
     return (
         <>
+            {viewPostModal ? (
+                <PostModal />
+            ) : null}
             {postModalOpen ? (
                 <CreateModal />
             ) : null}
@@ -56,7 +65,18 @@ function Profile() {
                         {myProfile ? "Minhas fotos" : "Fotos Populares"}
                     </h1>
 
-                    <AdvancedImage cldImg={myImage} />
+                    <div className="w-full flex flex-row flex-wrap justify-center gap-5 p-5 md:z-30">
+                       
+                       <img src="./src/assets/images/example.jpeg" alt="imagem" className="size-32" style={{ border:'10px white solid'}} onClick={()=>{handleViewPostModal('sabbat','algo','outracoisa','algo','algo')}} />
+                       <img src="./src/assets/images/example.jpeg" alt="imagem" className="size-32" style={{ border:'10px white solid'}} />
+                       <img src="./src/assets/images/example.jpeg" alt="imagem" className="size-32" style={{ border:'10px white solid'}} />
+                       <img src="./src/assets/images/example.jpeg" alt="imagem" className="size-32" style={{ border:'10px white solid'}} />
+                       <img src="./src/assets/images/example.jpeg" alt="imagem" className="size-32" style={{ border:'10px white solid'}} />
+                       <img src="./src/assets/images/example.jpeg" alt="imagem" className="size-32" style={{ border:'10px white solid'}} />
+                    
+           
+                    </div>
+
 
                 </div>
                 {myProfile ? (

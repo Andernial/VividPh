@@ -69,7 +69,7 @@ function Feed() {
                          <AdvancedImage  key={idx} cldImg={cld.image(`${images.image_public_id}`).resize(auto().gravity(autoGravity()).width(300).height(300))} className=" size-32" /> 
                              ))
                         ) : null}
-                    {/* <AdvancedImage cldImg={myImage} className=" size-32" /> */}
+           
                     </div>
 
                    
