@@ -3,7 +3,7 @@ import axios from "axios";
 export const FetchApi = async (method, url, body = null, authToken = null) => {
   const headers = authToken
     ? {
-        "x-acess-token": authToken,
+        "x-access-token": authToken,
       }
     : {};
 

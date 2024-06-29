@@ -1,19 +1,31 @@
 import { useRef, useState } from "react"
 import { Link } from "react-router-dom"
+import { FetchApi } from "../../utils/Fetch"
 
 function Register() {
     const [showPassword, setShowPassword] = useState(true)
     const [ requestLoading, setRequestLoading] = useState(false)
 
     const registerForm = useRef(null)
+    const apiUrl = import.meta.env.VITE_API_URL
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        setRequestLoading(true)
         const name = registerForm.current.name.value
         const email = registerForm.current.email.value
         const password = registerForm.current.password.value
         const userInfo = { name,email, password }
         console.log(userInfo)
+
+        try {
+            const request = await FetchApi('POST', `${apiUrl}/user/create`, userInfo)
+            console.log(request)
+        } catch (error) {
+            console.log(error)
+        }finally{
+            setRequestLoading(false)
+        }
 
     }
     return (

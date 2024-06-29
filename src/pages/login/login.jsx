@@ -1,18 +1,29 @@
 import { useRef, useState } from "react"
 import { Link } from "react-router-dom"
+import { FetchApi } from "../../utils/Fetch"
 
 function Login() {
     const [showPassword, setShowPassword] = useState(true)
     const [ requestLoading, setRequestLoading] = useState(false)
+    const apiUrl = import.meta.env.VITE_API_URL
 
     const loginForm = useRef(null)
 
     const handleSubmit = async (e) => {
+        setRequestLoading(true)
         e.preventDefault()
         const email = loginForm.current.email.value
         const password = loginForm.current.password.value
         const userInfo = { email, password }
         console.log(userInfo)
+        try {
+            const request = await FetchApi('POST', `${apiUrl}/user/login`, userInfo)
+            console.log(request)
+        } catch (error) {
+            console.log(error)
+        }finally{
+            setRequestLoading(false)
+        }
 
     }
     return (
@@ -39,7 +50,7 @@ function Login() {
                 </div>
 
                 <div className="p-5">
-                    <input type="submit" value='login' className="bg-slate-300 p-2"  />
+                    <input type="submit" value='login' className="bg-slate-300 p-2" disabled={requestLoading}  />
                 </div>
 
             </form>

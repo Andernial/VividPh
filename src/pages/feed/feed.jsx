@@ -9,11 +9,12 @@ import { auto } from "@cloudinary/url-gen/actions/resize";
 import { autoGravity } from "@cloudinary/url-gen/qualifiers/gravity";
 import { YoutubePlayerContext } from "../../context/YoutublePlayerContext";
 import { FetchApi } from "../../utils/Fetch";
+import PostModal from "../../components/PostModal";
 
 function Feed() {
     const [imagesData, setImagesData] = useState([])
     const [requestLoading, setRequestLoading] = useState(false)
-    const { postModalOpen, togglePostModal, navOpen } = useContext(ModalsContext)
+    const { postModalOpen, togglePostModal, navOpen,viewPostModal,toggleViewPostModal,selectPostData } = useContext(ModalsContext)
     const { togglePlayer } = useContext(YoutubePlayerContext)
     const myProfile = true
     const cloudName = import.meta.env.VITE_CLOUD_NAME
@@ -46,12 +47,20 @@ function Feed() {
         togglePostModal()
     }
 
+    const handleViewPostModal = (authorId,authorName,title,music,image) =>{
+        toggleViewPostModal()
+        selectPostData(authorId,authorName,title,music,image)
+    }
+
     useEffect(()=>{
         getImages()
     },[])
 
     return (
         <>
+         {viewPostModal ? (
+                <PostModal />
+            ) : null}
             {postModalOpen ? (
                 <CreateModal />
             ) : null}
@@ -66,7 +75,7 @@ function Feed() {
                         {imagesData ? (
                              imagesData.map((images,idx) => (
 
-                         <AdvancedImage  key={idx} cldImg={cld.image(`${images.image_public_id}`).resize(auto().gravity(autoGravity()).width(300).height(300))} className=" size-32" /> 
+                                <AdvancedImage  key={idx} cldImg={cld.image(`${images.image_public_id}`).resize(auto().gravity(autoGravity()).width(300).height(300))} className="size-32 cursor-pointer" style={{ border:'10px white solid'}} onClick={()=>{handleViewPostModal(images.user_name,images.post_title,images.post_youtube_url,images.image_public_id)}} /> 
                              ))
                         ) : null}
            

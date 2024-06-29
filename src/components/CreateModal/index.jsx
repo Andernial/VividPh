@@ -21,6 +21,7 @@ function CreateModal() {
     const apiUrl = import.meta.env.VITE_API_URL
     const postForm = useRef(null)
     const inputRef = useRef(null)
+    const user ={id:1,name:'vitória teste',token:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOjEsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzE5NjkyNjUzLCJleHAiOjE3MTk3Mjg2NTN9.ZlGZp7yuJCfe4e0Rghk9bg-4TRI8pBsMlISUCCsrluE'}
 
     const selectImage = (files) => {
         setError('')
@@ -69,9 +70,11 @@ function CreateModal() {
         const userId = 1 //valor default por agora //
         const data = { title, youtubeUrl: videoUrl, publicId: requestData.public_id, url: requestData.url }
         setRequestLoading(true)
-
+        console.log(user.token)
         try {
-            const request = await FetchApi("POST", `${apiUrl}/post/create/${userId}`, data)
+
+            const request = await FetchApi("POST", `${apiUrl}/post/create`, data,user.token)
+           
             console.log(request)
         } catch (error) {
             console.log(error)

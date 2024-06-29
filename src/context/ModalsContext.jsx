@@ -14,13 +14,14 @@ function ModalProvider({children}){
         setPostModalOpen(!postModalOpen)
     }
 
-    const selectPostData = (authorId,authorName,title,music,image) =>{
-        const postDataItems = {authorId,authorName,title,music,image}
+    const selectPostData = (authorName,title,music,image) =>{
+        const postDataItems = {authorName,title,music,image}
         setPostData(postDataItems)
     }
 
     const toggleViewPostModal = () =>{
         setViewPostModal(!viewPostModal)
+        console.log('ta indo o clik')
     }
 
     const toggleNav = () =>{

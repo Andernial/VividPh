@@ -2,7 +2,7 @@ import ProfilePic from "../../assets/images/example.jpeg"
 import { FaPlus } from "react-icons/fa";
 
 import { Cloudinary } from '@cloudinary/url-gen';
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ModalsContext } from "../../context/ModalsContext";
 import { AdvancedImage } from "@cloudinary/react";
 import CreateModal from "../../components/CreateModal";
@@ -10,12 +10,17 @@ import { auto } from "@cloudinary/url-gen/actions/resize";
 import { autoGravity } from "@cloudinary/url-gen/qualifiers/gravity";
 import { YoutubePlayerContext } from "../../context/YoutublePlayerContext";
 import PostModal from "../../components/PostModal";
+import { FetchApi } from "../../utils/Fetch";
 
 function Profile() {
-    const { postModalOpen, togglePostModal, navOpen, viewPostModal,toggleViewPostModal, selectPostData} = useContext(ModalsContext)
+    const { postModalOpen, togglePostModal, navOpen, viewPostModal,toggleViewPostModal,selectPostData} = useContext(ModalsContext)
     const { togglePlayer } = useContext(YoutubePlayerContext)
+    const [requestLoading,setRequestLoading] = useState(false)
+    const [imagesData, setImagesData] = useState([])
     const myProfile = true
     const cloudName = import.meta.env.VITE_CLOUD_NAME
+    const user ={id:1,name:'vitória teste'}
+    const apiUrl = import.meta.env.VITE_API_URL
 
     const cld = new Cloudinary({ // setando imagens com o cloudnary
         cloud: {
@@ -23,8 +28,20 @@ function Profile() {
         }
     })
 
+    const getImages = async () => {
+        setRequestLoading(true)
 
-    const myImage = cld.image('ud6cefpbtatpo0pbfret').resize(auto().gravity(autoGravity()).width(200).height(200));
+        try {
+            const request = await FetchApi("GET", `${apiUrl}/post/showUser-post/${user.name}`,'')
+            setImagesData(request.results)
+            console.log(request)
+        } catch (error) {
+            console.log(error)
+        }finally{
+            setRequestLoading(false)
+        }
+    }
+
 
     const handlePostModal = () => {
         togglePlayer('')
@@ -35,6 +52,11 @@ function Profile() {
         toggleViewPostModal()
         selectPostData(authorId,authorName,title,music,image)
     }
+
+    useEffect(()=>{
+        console.log('caiu aqui')
+        getImages()
+    },[])
 
     return (
         <>
@@ -67,12 +89,12 @@ function Profile() {
 
                     <div className="w-full flex flex-row flex-wrap justify-center gap-5 p-5 md:z-30">
                        
-                       <img src="./src/assets/images/example.jpeg" alt="imagem" className="size-32" style={{ border:'10px white solid'}} onClick={()=>{handleViewPostModal('sabbat','algo','outracoisa','algo','algo')}} />
-                       <img src="./src/assets/images/example.jpeg" alt="imagem" className="size-32" style={{ border:'10px white solid'}} />
-                       <img src="./src/assets/images/example.jpeg" alt="imagem" className="size-32" style={{ border:'10px white solid'}} />
-                       <img src="./src/assets/images/example.jpeg" alt="imagem" className="size-32" style={{ border:'10px white solid'}} />
-                       <img src="./src/assets/images/example.jpeg" alt="imagem" className="size-32" style={{ border:'10px white solid'}} />
-                       <img src="./src/assets/images/example.jpeg" alt="imagem" className="size-32" style={{ border:'10px white solid'}} />
+                       {imagesData ? (
+                             imagesData.map((images,idx) => (
+
+                         <AdvancedImage  key={idx} cldImg={cld.image(`${images.image_public_id}`).resize(auto().gravity(autoGravity()).width(300).height(300))} className="size-32 cursor-pointer" style={{ border:'10px white solid'}} onClick={()=>{handleViewPostModal(images.user_name,images.post_title,images.post_youtube_url,images.image_public_id)}} /> 
+                             ))
+                        ) : null}
                     
            
                     </div>
@@ -80,16 +102,15 @@ function Profile() {
 
                 </div>
                 {myProfile ? (
-                    <div className={`fixed w-full flex flex-col transition duration-200 scale-100 justify-end items-end z-20 top-3/4 ${postModalOpen ? 'invisible' : null}`}>
+               
                         <button
-                            className="flex justify-center items-center mr-5 size-16 rounded-full transition duration-500 ease-in-out bg-white border-2 border-black hover:bg-slate-300"
+                            className={`flex fixed top-96 right-0 justify-center items-center mt-56 mr-5 size-16 rounded-full transition duration-500 ease-in-out bg-white border-2 border-black hover:bg-slate-300 ${navOpen || postModalOpen ? 'hidden' : ''}`}
                             onClick={()=>setTimeout(()=>{
                                 handlePostModal()
                             },400)}
                         >
                             <FaPlus />
                         </button>
-                    </div>
                 ) : null}
 
 
