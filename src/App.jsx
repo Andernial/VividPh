@@ -4,6 +4,7 @@ import Header from './components/Header'
 import IndexRouter from './routes/router'
 import ModalProvider from './context/ModalsContext'
 import YoutubePlayerContextProvider from './context/YoutublePlayerContext'
+import AuthProvider from './context/AuthContext'
 
 function App() {
 
@@ -12,15 +13,16 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <YoutubePlayerContextProvider>
-
-
-          <ModalProvider>
-            <Header />
-            <IndexRouter />
-          </ModalProvider>
-
-        </YoutubePlayerContextProvider>
+          <YoutubePlayerContextProvider>
+            <ModalProvider>
+              <AuthProvider>
+                
+             
+              <Header />
+              <IndexRouter />
+              </AuthProvider>
+            </ModalProvider>
+          </YoutubePlayerContextProvider>
       </BrowserRouter>
 
 

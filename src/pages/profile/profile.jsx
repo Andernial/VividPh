@@ -11,6 +11,8 @@ import { autoGravity } from "@cloudinary/url-gen/qualifiers/gravity";
 import { YoutubePlayerContext } from "../../context/YoutublePlayerContext";
 import PostModal from "../../components/PostModal";
 import { FetchApi } from "../../utils/Fetch";
+import { useAuth } from "../../context/AuthContext";
+
 
 function Profile() {
     const { postModalOpen, togglePostModal, navOpen, viewPostModal,toggleViewPostModal,selectPostData} = useContext(ModalsContext)
@@ -19,7 +21,7 @@ function Profile() {
     const [imagesData, setImagesData] = useState([])
     const myProfile = true
     const cloudName = import.meta.env.VITE_CLOUD_NAME
-    const user ={id:1,name:'vitória teste'}
+    const { authUser } = useAuth()
     const apiUrl = import.meta.env.VITE_API_URL
 
     const cld = new Cloudinary({ // setando imagens com o cloudnary
@@ -32,7 +34,7 @@ function Profile() {
         setRequestLoading(true)
 
         try {
-            const request = await FetchApi("GET", `${apiUrl}/post/showUser-post/${user.name}`,'')
+            const request = await FetchApi("GET", `${apiUrl}/post/showUser-post/${authUser.name}`,'')
             setImagesData(request.results)
             console.log(request)
         } catch (error) {
@@ -77,7 +79,7 @@ function Profile() {
                     {/* Conteúdo sobre a imagem */}
                     <div className="w-full flex flex-col justify-center items-center text-center text-white z-30 mt-10">
                         <img src={ProfilePic} alt="Foto de Perfil" className={`size-24 rounded-full border-2 border-black`} />
-                        <p className="text-lg font-bold p-1">Sabbat</p>
+                        <p className="text-lg font-bold p-1">{authUser.name}</p>
                         <p className=" w-60 pt-5">Olá eu gosto de tirar muitas fotos e esse é meu perfil !</p>
                     </div>
 

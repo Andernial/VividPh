@@ -1,6 +1,14 @@
+import { useNavigate } from "react-router-dom"
 import PhotoBackGround from "../../assets/images/background-sky.jpeg"
 
 function Home() {
+
+  const navigate = useNavigate()
+
+  const sendLogin = () =>{
+    navigate('/Login')
+  }
+
     return (
         <div className="h-svh w-full bg-mainBg relative">
         <div
@@ -16,7 +24,7 @@ function Home() {
             <p className="w-64 md:w-auto md:text-xl">
               Navegue pelas publicações de outros membros, descubra novas músicas, e inspire-se com a criatividade da nossa comunidade.
             </p>
-            <button className="bg-gray-400 transition duration-700 ease-in-out text-sm rounded p-2 w-32 hover:bg-gray-700 hover:scale-110 md:p-3 md:text-lg md:w-52">Junte-se a nós!</button>
+            <button className="bg-gray-400 transition duration-700 ease-in-out text-sm rounded p-2 w-32 hover:bg-gray-700 hover:scale-110 md:p-3 md:text-lg md:w-52" onClick={() => sendLogin()}>Junte-se a nós!</button>
           </div>
           
         </div>
