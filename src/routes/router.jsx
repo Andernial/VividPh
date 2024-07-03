@@ -5,12 +5,13 @@ import Feed from '../pages/feed/feed';
 import Login from '../pages/login/login';
 import Register from '../pages/register/register';
 import { RequireAuth } from '../utils/RequireAuth';
+import { AlreadyAuth } from '../utils/AlreadyAuth';
 
 const IndexRouter = () => {
 	return (
 		<Routes>
 			<Route path="/" element={<Home />} />
-			<Route path="/Login" element={<Login />} />
+			<Route path="/Login" element={<AlreadyAuth><Login /></AlreadyAuth> } />
 			<Route path="/Cadastro" element={<Register />} />
             <Route path="/Profile" element={<RequireAuth><Profile /></RequireAuth>} />
 			<Route path="/Feed" element={<Feed />} />

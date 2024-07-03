@@ -7,16 +7,21 @@ import { autoGravity } from "@cloudinary/url-gen/qualifiers/gravity";
 import Carousel from "../../components/Carousel"
 import { useEffect, useState } from "react";
 import { FetchApi } from "../../utils/Fetch";
+import { useAuth } from "../../context/AuthContext";
 
 function Home() {
 
   const navigate = useNavigate()
-
+  const {isLoggedIn} = useAuth()
   const [imagesData, setImagesData] = useState([])
   const [requestLoading, setRequestLoading] = useState(false)
   const cloudName = import.meta.env.VITE_CLOUD_NAME
   const apiUrl = import.meta.env.VITE_API_URL
+
   const sendLogin = () => {
+    if(isLoggedIn){
+      return navigate('/Profile')
+    }
     navigate('/Login')
   }
 
@@ -66,16 +71,19 @@ function Home() {
       <div className="">
         <h1 className="text-black font-bold text-2xl p-7">
           Fotos Populares
-
-          <Carousel>
+          </h1>
+          <div className="w-full flex justify-center items-center">
+          <Carousel autoSlide={true}>
             {imagesData ? (
               imagesData.map((images, idx) => (
 
-                <AdvancedImage key={idx} cldImg={cld.image(`${images.image_public_id}`).resize(auto().gravity(autoGravity()).width(300).height(300))} className="size-32 cursor-pointer" style={{ border: '10px white solid' }} onClick={() => { handleViewPostModal(images.user_name, images.post_title, images.post_youtube_url, images.image_public_id) }} />
+                <AdvancedImage key={idx} cldImg={cld.image(`${images.image_public_id}`).resize(auto().gravity(autoGravity()).width(300).height(300))} className="w-64 cursor-pointer"  onClick={() => { handleViewPostModal(images.user_name, images.post_title, images.post_youtube_url, images.image_public_id) }} />
               ))
             ) : null}
           </Carousel>
-        </h1>
+          </div>
+         
+
       </div>
     </div>
   )

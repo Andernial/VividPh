@@ -7,7 +7,7 @@ function Login() {
     const [showPassword, setShowPassword] = useState(true)
     const [ requestLoading, setRequestLoading] = useState(false)
     const apiUrl = import.meta.env.VITE_API_URL
-    const {authUser,isLoggedIn,setAuthUser,setIsLoggedin} = useAuth()
+    const {setAuthUser,setIsLoggedin} = useAuth()
     const navigate = useNavigate()
 
     const loginForm = useRef(null)
@@ -44,7 +44,6 @@ function Login() {
     }
     return (
         <div className="h-svh w-full bg-mainBg relative flex flex-col justify-center items-center">
-            <p>{authUser ? `${authUser.name}`:null}</p>
             <h1 className="text-3xl text-center p-2">Faça login para acessar sua conta!</h1>
               <form ref={loginForm} onSubmit={handleSubmit} className="bg-white flex flex-col justify-center items-center p-5 rounded">
              
