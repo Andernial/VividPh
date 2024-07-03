@@ -8,18 +8,19 @@ import Carousel from "../../components/Carousel"
 import { useEffect, useState } from "react";
 import { FetchApi } from "../../utils/Fetch";
 import { useAuth } from "../../context/AuthContext";
+import LoadingPosts from "../../assets/images/loading.svg"
 
 function Home() {
 
   const navigate = useNavigate()
-  const {isLoggedIn} = useAuth()
+  const { isLoggedIn } = useAuth()
   const [imagesData, setImagesData] = useState([])
   const [requestLoading, setRequestLoading] = useState(false)
   const cloudName = import.meta.env.VITE_CLOUD_NAME
   const apiUrl = import.meta.env.VITE_API_URL
 
   const sendLogin = () => {
-    if(isLoggedIn){
+    if (isLoggedIn) {
       return navigate('/Profile')
     }
     navigate('/Login')
@@ -53,7 +54,7 @@ function Home() {
     <div className="min-h-svh w-full bg-mainBg relative">
       <div
         className=" w-full flex flex-col justify-center drop-shadow-lg bg-cover md:bg-center md:items-center relative"
-        style={{ backgroundImage: `url(${PhotoBackGround})` , height: '50svh'}} 
+        style={{ backgroundImage: `url(${PhotoBackGround})`, height: '50svh' }}
       >
         {/* Overlay para escurecer a imagem de fundo */}
         <div className="absolute inset-0 bg-black opacity-50"></div>
@@ -71,18 +72,26 @@ function Home() {
       <div className="">
         <h1 className="text-black font-bold text-2xl p-7">
           Fotos Populares
-          </h1>
-          <div className="w-full flex justify-center items-center">
-          <Carousel autoSlide={true}>
-            {imagesData ? (
-              imagesData.map((images, idx) => (
+        </h1>
+        <div className="w-full flex justify-center items-center">
+          {requestLoading ?
+              <img src={LoadingPosts} alt="loading" className="size-64" />
+            : null}
 
-                <AdvancedImage key={idx} cldImg={cld.image(`${images.image_public_id}`).resize(auto().gravity(autoGravity()).width(300).height(300))} className="w-64 cursor-pointer"  onClick={() => { handleViewPostModal(images.user_name, images.post_title, images.post_youtube_url, images.image_public_id) }} />
-              ))
-            ) : null}
-          </Carousel>
-          </div>
-         
+
+          {imagesData ? (
+            <Carousel autoSlide={true}>
+              {imagesData.map((image, idx) => (
+                <AdvancedImage
+                  key={idx}
+                  cldImg={cld.image(`${image.image_public_id}`).resize(auto().gravity(autoGravity()).width(300))}
+                />
+              ))}
+            </Carousel>
+          ) : null}
+
+        </div>
+
 
       </div>
     </div>

@@ -11,6 +11,7 @@ import { YoutubePlayerContext } from "../../context/YoutublePlayerContext";
 import { FetchApi } from "../../utils/Fetch";
 import PostModal from "../../components/PostModal";
 import CreateModal from "../../components/CreateModal";
+import LoadingPosts from "../../assets/images/loading.svg"
 
 function Feed() {
     const [imagesData, setImagesData] = useState([])
@@ -73,6 +74,8 @@ function Feed() {
                     </h1>
 
                     <div className="w-full flex flex-row flex-wrap justify-center gap-5 p-5">
+                    {requestLoading ? <img src={LoadingPosts} alt="loading" className=" size-28" /> : null}
+
                         {imagesData ? (
                              imagesData.map((images,idx) => (
 
