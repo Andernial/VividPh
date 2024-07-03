@@ -94,11 +94,11 @@ function Profile() {
 
                             {editingBio ?
                                 <>
-                                    <div className="flex flex-col gap-7">
-                                        <textarea className="w-full h-32 text-black p-2 border border-gray-300 rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                                    <div className="flex flex-col">
+                                        <textarea className="w-full h-20 text-black p-2 border border-gray-300 rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
                                         <div className="flex justify-between items-center">
-                                        <IoMdClose className=" size-10 cursor-pointer" onClick={handleBioEdit} />
-                                        <FaPencilAlt className="size-7 cursor-pointer" onClick={handleBioEdit} />
+                                        <IoMdClose className=" size-10 cursor-pointer m-5" onClick={handleBioEdit} />
+                                        <FaPencilAlt className="size-7 cursor-pointer m-5" onClick={handleBioEdit} />
                                         </div>
                                         
                                     </div>
