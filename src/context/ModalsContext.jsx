@@ -7,6 +7,7 @@ export const ModalsContext = createContext()
 function ModalProvider({children}){
     const [postModalOpen, setPostModalOpen] = useState(false)
     const [viewPostModal, setViewPostModal] = useState(false)
+    const [myPosts, setMyPosts] = useState([])
     const [postData, setPostData] = useState({})
     const [navOpen, setNavOpen] = useState(false)
 
@@ -29,7 +30,7 @@ function ModalProvider({children}){
     }
 
     return(
-        <ModalsContext.Provider value={{postModalOpen, togglePostModal,navOpen,toggleNav,viewPostModal,toggleViewPostModal, postData, selectPostData}}>{children}</ModalsContext.Provider>
+        <ModalsContext.Provider value={{postModalOpen, togglePostModal,navOpen,toggleNav,viewPostModal,toggleViewPostModal, postData, selectPostData,myPosts,setMyPosts}}>{children}</ModalsContext.Provider>
     )
 }
 

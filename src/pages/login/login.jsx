@@ -1,5 +1,5 @@
 import { useRef, useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { Link, json, useNavigate } from "react-router-dom"
 import { FetchApi } from "../../utils/Fetch"
 import { useAuth } from "../../context/AuthContext"
 
@@ -23,12 +23,16 @@ function Login() {
             const request = await FetchApi('POST', `${apiUrl}/user/login`, userInfo)
             console.log(request)
             setIsLoggedin(true)
-            setAuthUser({
+            const userData = {
                 name: request.results.name,
                 email: request.results.email,
                 id: request.results.id,
                 token: request.results.token
-            })
+            }
+
+            setAuthUser(userData)
+
+            localStorage.setItem('user', JSON.stringify(userData))
            
             navigate('/Profile')
         } catch (error) {

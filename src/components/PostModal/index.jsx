@@ -1,4 +1,4 @@
-import { useContext } from "react"
+import { useContext, useEffect, useState } from "react"
 import { ModalsContext } from "../../context/ModalsContext"
 import { IoMdClose } from "react-icons/io";
 import { FaPlay, FaPause } from "react-icons/fa";
@@ -13,7 +13,8 @@ import LoadingSvg from "../../assets/images/loading.svg";
 
 function PostModal(){
     const {viewPostModal,toggleViewPostModal,postData} = useContext(ModalsContext)
-    const { videoPlaying, togglePlayer, loadingPlayer } = useContext(YoutubePlayerContext)
+    const { videoPlaying, togglePlayer, loadingPlayer, toggleLoading } = useContext(YoutubePlayerContext)
+    const [renderVideo,setRenderVideo] = useState(null)
     
 
     const cloudName = import.meta.env.VITE_CLOUD_NAME
@@ -27,7 +28,14 @@ function PostModal(){
     const handlePostModal = () =>{
        toggleViewPostModal()
        togglePlayer('')
+       setRenderVideo(false)
+       toggleLoading(false)
     }
+
+    useEffect(()=>{
+        setRenderVideo(true)
+
+    },[])
 
     return(
         <div className="fixed h-svh w-full flex flex-col items-center justify-center z-30" style={{ backgroundColor: "rgba(0, 0, 0, 0.355)" }}>
@@ -38,12 +46,12 @@ function PostModal(){
                         <h1 className="">{postData.title}</h1>
                         <div>
                         <AdvancedImage cldImg={cld.image(`${postData.image}`).resize(auto().gravity(autoGravity()).width(500).height(500))} className="p-5" /> 
-                        <YouTubeAudioPlayer videoId={postData.music} />
+                        {renderVideo ? <YouTubeAudioPlayer videoId={postData.music} /> : null}
                         </div>
                         <div className="w-full pl-12">
                         <p className="text-start">{postData.authorName}</p>
                         <div className="flex flex-row items-center gap-10">
-                            <p className="text-start">music</p>
+                            <p className="text-start">Música</p>
                             {videoPlaying === 'playing' ? <FaPause onClick={() => togglePlayer('paused')} className="cursor-pointer size-7" /> : null}
                             {videoPlaying === 'paused' ? <FaPlay onClick={() => togglePlayer('playing')} className="cursor-pointer size-7" /> : null}
                             {loadingPlayer ? (

@@ -7,6 +7,7 @@ import { YoutubePlayerContext } from "../../context/YoutublePlayerContext";
 
 import LoadingSvg from "../../assets/images/loading.svg";
 import { ModalsContext } from "../../context/ModalsContext";
+import { useAuth } from "../../context/AuthContext";
 
 function CreateModal() {
     const [displayFile, setDisplayFile] = useState(null)
@@ -16,12 +17,13 @@ function CreateModal() {
     const [requestLoading, setRequestLoading] = useState(false)
     const [error, setError] = useState('')
     const { videoPlaying, togglePlayer, loadingPlayer } = useContext(YoutubePlayerContext)
-    const { togglePostModal } = useContext(ModalsContext)
+    const { authUser } = useAuth()
+    const { togglePostModal, myPosts, setMyPosts } = useContext(ModalsContext)
     const cloudName = import.meta.env.VITE_CLOUD_NAME
     const apiUrl = import.meta.env.VITE_API_URL
     const postForm = useRef(null)
     const inputRef = useRef(null)
-    const user ={id:1,name:'vitória teste',token:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOjEsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzE5NjkyNjUzLCJleHAiOjE3MTk3Mjg2NTN9.ZlGZp7yuJCfe4e0Rghk9bg-4TRI8pBsMlISUCCsrluE'}
+    
 
     const selectImage = (files) => {
         setError('')
@@ -39,6 +41,7 @@ function CreateModal() {
 
     const selectvideo = () => {
         const url = inputRef.current.value
+
         const cleanUrl = url.split('v=')[1]
         if (cleanUrl === videoUrl) { return alert('Url Identica') }
         togglePlayer('')
@@ -48,6 +51,10 @@ function CreateModal() {
 
     }
 
+    const closePostModal = () =>{
+        togglePlayer('')
+        togglePostModal()
+    }
 
     const uploadImage = async (e) => {
         e.preventDefault()
@@ -67,15 +74,31 @@ function CreateModal() {
     }
 
     const uploadPost = async (requestData, title) => {
-        const userId = 1 //valor default por agora //
         const data = { title, youtubeUrl: videoUrl, publicId: requestData.public_id, url: requestData.url }
         setRequestLoading(true)
-        console.log(user.token)
+
         try {
 
-            const request = await FetchApi("POST", `${apiUrl}/post/create`, data,user.token)
+            const request = await FetchApi("POST", `${apiUrl}/post/create`, data, authUser.token)
            
             console.log(request)
+
+            const results = request.results
+
+            const newPost = {
+                image_id: results.images[0].image_id,
+                image_public_id:results.images[0].public_id,
+                image_url:results.images[0].url,
+                post_id:results.id,
+                post_title: results.title,
+                post_youtube_url: results.urlYoutube,
+                user_name: results.user_name
+
+            }
+            
+            console.log(newPost,'esse é o post novo')
+
+            setMyPosts((prevPosts) => [...prevPosts, newPost] )
         } catch (error) {
             console.log(error)
         }finally{
@@ -89,7 +112,7 @@ function CreateModal() {
             <div className="bg-white flex flex-col justify-center items-center  w-full" style={{ minHeight: '50%', maxHeight: 'fit-content' }}>
                 <form ref={postForm} onSubmit={uploadImage} className="flex flex-col justify-center items-center gap-3">
                     <div className="flex justify-end w-full p-5">
-                        <IoMdClose className="size-9 cursor-pointer" onClick={togglePostModal} />
+                        <IoMdClose className="size-9 cursor-pointer" onClick={()=>closePostModal()} />
                     </div>
                     <label htmlFor="titulo">Título</label>
                     <input type="text" id="titulo" name="titulo" placeholder="escreva algo legal!" className=" p-1 boder-2 bg-slate-200 border-black rounded" />

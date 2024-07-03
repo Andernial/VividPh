@@ -13,16 +13,17 @@ function Header() {
   const handleLogout = () =>{
     setIsLoggedin(false)
     setAuthUser(null)
+    localStorage.clear()
     navigate("/")
     toggleNav()
   }
 
   return (
-    <div className={`fixed w-full z-30 text-white transition-colors duration-700 ease-in-out md:bg-transparent md:h-0 ${navOpen ? 'h-screen bg-slate-600' : 'bg-transparent'}`}>
-      <div className="p-5 flex flex-col w-full h-full md:flex-row md:justify-around ">
+    <div className={`fixed w-full z-30 text-white transition-colors  duration-700 ease-in-out md:bg-transparent md:h-0 ${navOpen ? 'h-screen bg-slate-600' : ' bg-transparent'}`}>
+      <div className="p-5 flex flex-col w-full h-full md:flex-row md:justify-around">
         <div className="flex justify-between md:block md:h-0">
-          <h1 className="text-4xl hover:cursor-pointer">
-            <Link to="/" onClick={() => { if (navOpen) toggleNav(); }}>VividPh</Link>
+          <h1 className="text-4xl hover:cursor-pointer ">
+            <Link to="/" style={{textShadow:'1px 1px black'}} onClick={() => { if (navOpen) toggleNav(); }}>VividPh</Link>
           </h1>
           <button
             onClick={toggleNav}

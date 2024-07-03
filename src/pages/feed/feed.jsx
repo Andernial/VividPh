@@ -1,15 +1,16 @@
 import { FaPlus } from "react-icons/fa";
 
-import { Cloudinary } from '@cloudinary/url-gen';
+
 import { useContext, useEffect, useState } from "react";
 import { ModalsContext } from "../../context/ModalsContext";
 import { AdvancedImage } from "@cloudinary/react";
-import CreateModal from "../../components/CreateModal";
+import { Cloudinary } from '@cloudinary/url-gen';
 import { auto } from "@cloudinary/url-gen/actions/resize";
 import { autoGravity } from "@cloudinary/url-gen/qualifiers/gravity";
 import { YoutubePlayerContext } from "../../context/YoutublePlayerContext";
 import { FetchApi } from "../../utils/Fetch";
 import PostModal from "../../components/PostModal";
+import CreateModal from "../../components/CreateModal";
 
 function Feed() {
     const [imagesData, setImagesData] = useState([])

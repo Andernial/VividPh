@@ -15,10 +15,10 @@ import { useAuth } from "../../context/AuthContext";
 
 
 function Profile() {
-    const { postModalOpen, togglePostModal, navOpen, viewPostModal,toggleViewPostModal,selectPostData} = useContext(ModalsContext)
+    const { postModalOpen, togglePostModal, navOpen, viewPostModal,toggleViewPostModal,selectPostData,myPosts,setMyPosts} = useContext(ModalsContext)
     const { togglePlayer } = useContext(YoutubePlayerContext)
     const [requestLoading,setRequestLoading] = useState(false)
-    const [imagesData, setImagesData] = useState([])
+
     const myProfile = true
     const cloudName = import.meta.env.VITE_CLOUD_NAME
     const { authUser } = useAuth()
@@ -35,7 +35,7 @@ function Profile() {
 
         try {
             const request = await FetchApi("GET", `${apiUrl}/post/showUser-post/${authUser.name}`,'')
-            setImagesData(request.results)
+            setMyPosts(request.results)
             console.log(request)
         } catch (error) {
             console.log(error)
@@ -91,8 +91,8 @@ function Profile() {
 
                     <div className="w-full flex flex-row flex-wrap justify-center gap-5 p-5 md:z-30">
                        
-                       {imagesData ? (
-                             imagesData.map((images,idx) => (
+                       {myPosts ? (
+                             myPosts.map((images,idx) => (
 
                          <AdvancedImage  key={idx} cldImg={cld.image(`${images.image_public_id}`).resize(auto().gravity(autoGravity()).width(300).height(300))} className="size-32 cursor-pointer" style={{ border:'10px white solid'}} onClick={()=>{handleViewPostModal(images.user_name,images.post_title,images.post_youtube_url,images.image_public_id)}} /> 
                              ))
