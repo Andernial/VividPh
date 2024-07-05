@@ -10,14 +10,17 @@ import { Cloudinary } from '@cloudinary/url-gen';
 import YouTubeAudioPlayer from "../YoutubeAudioPlayer";
 import { YoutubePlayerContext } from "../../context/YoutublePlayerContext";
 import LoadingSvg from "../../assets/images/loading.svg";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
 
 function PostModal(){
-    const {viewPostModal,toggleViewPostModal,postData} = useContext(ModalsContext)
+    const {toggleViewPostModal,postData} = useContext(ModalsContext)
     const { videoPlaying, togglePlayer, loadingPlayer, toggleLoading } = useContext(YoutubePlayerContext)
     const [renderVideo,setRenderVideo] = useState(null)
     
-
+	const navigate = useNavigate();
     const cloudName = import.meta.env.VITE_CLOUD_NAME
+    const { authUser } = useAuth()
 
     const cld = new Cloudinary({ // setando imagens com o cloudnary
         cloud: {
@@ -31,6 +34,15 @@ function PostModal(){
        setRenderVideo(false)
        toggleLoading(false)
     }
+
+    const handleProfileClick = (name) =>{
+        handlePostModal()
+
+        if(authUser.name === name){
+            return navigate('/Profile')
+        }
+        navigate(`/Profile/${name}`);
+    } 
 
     useEffect(()=>{
         setRenderVideo(true)
@@ -49,7 +61,7 @@ function PostModal(){
                         {renderVideo ? <YouTubeAudioPlayer videoId={postData.music} /> : null}
                         </div>
                         <div className="w-full pl-12">
-                        <p className="text-start">{postData.authorName}</p>
+                        <p className="text-start" onClick={()=>handleProfileClick(postData.authorName)}>{postData.authorName}</p>
                         <div className="flex flex-row items-center gap-10">
                             <p className="text-start">Música</p>
                             {videoPlaying === 'playing' ? <FaPause onClick={() => togglePlayer('paused')} className="cursor-pointer size-7" /> : null}

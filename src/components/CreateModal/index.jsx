@@ -95,10 +95,10 @@ function CreateModal() {
                 user_name: results.user_name
 
             }
-            
-            console.log(newPost,'esse é o post novo')
 
             setMyPosts((prevPosts) => [...prevPosts, newPost] )
+
+            closePostModal()
         } catch (error) {
             console.log(error)
         }finally{

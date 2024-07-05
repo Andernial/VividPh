@@ -28,7 +28,6 @@ function Profile() {
     const [myInfo, setMyInfo] = useState(null)
     const [editingBio, setEditingBio] = useState(false)
 
-    const myProfile = true
 
     const bioTextRef = useRef(null);
     const cloudName = import.meta.env.VITE_CLOUD_NAME
@@ -168,6 +167,9 @@ function Profile() {
     useEffect(() => {
         getImages()
         getProfileInfo()
+        return () => {
+            setMyPosts([]);
+        };
     }, [])
 
     return (
@@ -249,7 +251,7 @@ function Profile() {
                 </div>
                 <div className="w-full">
                     <h1 className="text-black font-bold text-center text-2xl py-7">
-                        {myProfile ? "Minhas fotos" : "Fotos Populares"}
+                        Minhas fotos 
                     </h1>
 
                     <div className="w-full flex flex-row flex-wrap justify-center gap-5 p-5 md:z-30">
@@ -268,7 +270,7 @@ function Profile() {
 
 
                 </div>
-                {myProfile ? (
+              
 
                     <button
                         className={`flex fixed top-96 right-0 justify-center items-center mt-56 mr-5 size-16 rounded-full transition duration-500 ease-in-out bg-white border-2 border-black hover:bg-slate-300 ${navOpen || postModalOpen ? 'hidden' : ''}`}
@@ -278,7 +280,7 @@ function Profile() {
                     >
                         <FaPlus />
                     </button>
-                ) : null}
+             
 
 
             </div>
