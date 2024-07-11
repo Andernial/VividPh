@@ -17,7 +17,6 @@ function App() {
             <ModalProvider>
               <AuthProvider>
                 
-             
               <Header />
               <IndexRouter />
               </AuthProvider>

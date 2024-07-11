@@ -9,11 +9,9 @@ function YoutubePlayerContextProvider({ children }) {
     const [loadingPlayer, setLoadingPlayer] = useState(false)
 
     const togglePlayer = (value) => {
-        console.log('ativado ?')
         switch (value) {
             case 'playing':
                 setvideoPlaying(value)
-                console.log('caiu aqui',videoPlaying)
                 break;
 
             case 'paused':
@@ -33,7 +31,6 @@ function YoutubePlayerContextProvider({ children }) {
 
     const toggleLoading = (value) =>{
         setLoadingPlayer(value)
-        console.log(loadingPlayer)
     }
 
     return (

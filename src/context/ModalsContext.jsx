@@ -12,6 +12,7 @@ function ModalProvider({children}){
     const [navOpen, setNavOpen] = useState(false)
 
     const togglePostModal = () =>{
+        setNavOpen
         setPostModalOpen(!postModalOpen)
     }
 
@@ -22,15 +23,18 @@ function ModalProvider({children}){
 
     const toggleViewPostModal = () =>{
         setViewPostModal(!viewPostModal)
-        console.log('ta indo o clik')
     }
 
     const toggleNav = () =>{
         setNavOpen(!navOpen)
     }
 
+    const closeNav = () =>{
+        setNavOpen(false)
+    }
+
     return(
-        <ModalsContext.Provider value={{postModalOpen, togglePostModal,navOpen,toggleNav,viewPostModal,toggleViewPostModal, postData, selectPostData,myPosts,setMyPosts}}>{children}</ModalsContext.Provider>
+        <ModalsContext.Provider value={{postModalOpen, togglePostModal,navOpen,toggleNav,viewPostModal,toggleViewPostModal, postData, selectPostData,myPosts,setMyPosts,closeNav}}>{children}</ModalsContext.Provider>
     )
 }
 

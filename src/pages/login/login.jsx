@@ -6,6 +6,7 @@ import { useAuth } from "../../context/AuthContext"
 function Login() {
     const [showPassword, setShowPassword] = useState(true)
     const [ requestLoading, setRequestLoading] = useState(false)
+    const [ logError, setLogError] = useState(false)
     const apiUrl = import.meta.env.VITE_API_URL
     const {setAuthUser,setIsLoggedin} = useAuth()
     const navigate = useNavigate()
@@ -18,10 +19,10 @@ function Login() {
         const email = loginForm.current.email.value
         const password = loginForm.current.password.value
         const userInfo = { email, password }
-        console.log(userInfo)
+
         try {
             const request = await FetchApi('POST', `${apiUrl}/user/login`, userInfo)
-            console.log(request)
+
             setIsLoggedin(true)
             const userData = {
                 name: request.results.name,
@@ -29,14 +30,14 @@ function Login() {
                 id: request.results.id,
                 token: request.results.token
             }
-
+            setLogError(false)
             setAuthUser(userData)
 
             localStorage.setItem('user', JSON.stringify(userData))
            
             navigate('/Profile')
         } catch (error) {
-            console.log(error)
+            setLogError(true)
         }finally{
             setRequestLoading(false)
         }
@@ -48,6 +49,7 @@ function Login() {
               <form ref={loginForm} onSubmit={handleSubmit} className="bg-white flex flex-col justify-center items-center p-5 rounded">
              
                 <div className="flex flex-col">
+                    {logError ? <span className="text-red-600">Usuário não encontrado</span> : null}
                     <label>Email</label>
                 
                     <input type="text" name="email" className="bg-slate-300 p-1" />

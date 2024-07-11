@@ -8,7 +8,8 @@ export default {
     extend: {
       colors: {
         'mainBg':'#F2E8B3',
-        'hoverColor':"#72F2C3"
+        'hoverColor':"#72F2C3",
+        'postBg':"#B379D9"
       },
     },
   },

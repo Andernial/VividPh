@@ -1,4 +1,4 @@
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { IoMdMenu } from "react-icons/io"
 import { Link, useNavigate } from "react-router-dom"
 import { ModalsContext } from "../../context/ModalsContext"
@@ -6,8 +6,9 @@ import { useAuth } from "../../context/AuthContext"
 
 
 function Header() {
-  const { navOpen, toggleNav } = useContext(ModalsContext)
+  const { navOpen, toggleNav,closeNav } = useContext(ModalsContext)
   const { authUser, isLoggedIn, setAuthUser, setIsLoggedin } = useAuth()
+  const [isScrolling, setIsScrolling] = useState(false)
   const navigate = useNavigate()
 
   const handleLogout = () =>{
@@ -15,13 +16,26 @@ function Header() {
     setAuthUser(null)
     localStorage.clear()
     navigate("/")
-    toggleNav()
+    closeNav()
   }
 
+  const changeBackground = () =>{
+    if(window.scrollY >= 30){
+
+      setIsScrolling(true)
+    }else{
+      setIsScrolling(false)
+    }
+  }
+
+  window.addEventListener('scroll',()=>{
+    changeBackground()
+  })
+
   return (
-    <div className={`fixed w-full z-30 text-white transition-colors  duration-700 ease-in-out md:bg-transparent md:h-0 ${navOpen ? 'h-screen bg-slate-600' : ' bg-transparent'}`}>
+    <div className={`fixed w-full z-30 text-white transition-colors  duration-700 ease-in-out  ${navOpen ? 'h-screen bg-slate-600 ' : ''}${isScrolling && !navOpen ? 'bg-slate-600 md:bg-slate-600' : ''}`} >
       <div className="p-5 flex flex-col w-full h-full md:flex-row md:justify-around">
-        <div className="flex justify-between md:block md:h-0">
+        <div className="flex justify-between md:block ">
           <h1 className="text-4xl hover:cursor-pointer ">
             <Link to="/" style={{textShadow:'1px 1px black'}} onClick={() => { if (navOpen) toggleNav(); }}>VividPh</Link>
           </h1>
@@ -38,10 +52,10 @@ function Header() {
             {isLoggedIn ? (
               <>
                 <li className="transition duration-500 ease-in-out hover:scale-105 hover:text-hoverColor cursor-pointer">
-                <Link to="/Profile" onClick={toggleNav}>Perfil</Link>
+                <Link to="/Profile" onClick={closeNav}>Perfil</Link>
                 </li>
                 <li className="transition duration-500 ease-in-out hover:scale-105 hover:text-hoverColor cursor-pointer">
-                  <Link to="/Feed" onClick={toggleNav}>Feed</Link>
+                  <Link to="/Feed" onClick={closeNav}>Feed</Link>
                 </li>
                 <li className="transition duration-500 ease-in-out hover:scale-105 hover:text-hoverColor cursor-pointer">
                 <button onClick={()=>handleLogout()}>Logout</button>
@@ -50,10 +64,10 @@ function Header() {
             ) : (
               <>
                 <li className="transition duration-500 ease-in-out hover:scale-105 hover:text-hoverColor cursor-pointer">
-                  <Link to="/Login" onClick={toggleNav}>Login</Link>
+                  <Link to="/Login" onClick={closeNav}>Login</Link>
                 </li>
                 <li className="transition duration-500 ease-in-out hover:scale-105 hover:text-hoverColor cursor-pointer">
-                  <Link to="/Cadastro" onClick={toggleNav}>Cadastro</Link>
+                  <Link to="/Cadastro" onClick={closeNav}>Cadastro</Link>
                 </li>
               </>
             )}

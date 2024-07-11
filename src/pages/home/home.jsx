@@ -38,9 +38,8 @@ function Home() {
     try {
       const request = await FetchApi("GET", `${apiUrl}/post/show-all`, '')
       setImagesData(request.results)
-      console.log(request)
     } catch (error) {
-      console.log(error)
+
     } finally {
       setRequestLoading(false)
     }
@@ -61,11 +60,11 @@ function Home() {
 
         {/* Conteúdo sobre a imagem */}
         <div className="flex flex-col gap-5 text-white pl-5 pt-7 z-30 md:pl-0">
-          <h1 className="text-xl md:text-5xl font-bold">Explore sua criatividade!</h1>
-          <p className="w-64 md:w-auto md:text-xl">
+          <h1 className="text-xl md:text-4xl md:text-center font-bold">Explore sua criatividade!</h1>
+          <p className="w-64 md:w-auto md:text-xl md:text-center">
             Navegue pelas publicações de outros membros, descubra novas músicas, e inspire-se com a criatividade da nossa comunidade.
           </p>
-          <button className="bg-gray-400 transition duration-700 ease-in-out text-sm rounded p-2 w-32 hover:bg-gray-700 hover:scale-110 md:p-3 md:text-lg md:w-52" onClick={() => sendLogin()}>Junte-se a nós!</button>
+          <button className="bg-gray-400 transition duration-700 ease-in-out text-sm rounded p-2 w-32 hover:bg-gray-700 hover:scale-110 md:p-3 md:text-lg md:w-52 md:hidden" onClick={() => sendLogin()}>Junte-se a nós!</button>
         </div>
 
       </div>
@@ -73,7 +72,7 @@ function Home() {
         <h1 className="text-black font-bold text-2xl p-7">
           Fotos Populares
         </h1>
-        <div className="w-full flex justify-center items-center">
+        <div className="w-full flex justify-center items-center p-5">
           {requestLoading ?
               <img src={LoadingPosts} alt="loading" className=" size-14" />
             : null}

@@ -28,9 +28,8 @@ function Feed() {
         try {
             const request = await FetchApi("GET", `${apiUrl}/post/show-all`,'')
             setImagesData(request.results)
-            console.log(request)
         } catch (error) {
-            console.log(error)
+
         }finally{
             setRequestLoading(false)
         }

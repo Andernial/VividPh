@@ -42,6 +42,7 @@ const YouTubeAudioPlayer = ({ videoId }) => {
                         events: {
                             onReady: onPlayerReady,
                             onStateChange: onPlayerStateChange,
+                            onError: onPlayerError,
                         },
                     });
                 } else {
@@ -90,6 +91,11 @@ const YouTubeAudioPlayer = ({ videoId }) => {
             toggleLoading(false);
             togglePlayer('playing');
         }
+    };
+
+    const onPlayerError = (event) => {
+        toggleLoading(false);
+
     };
 
     return (

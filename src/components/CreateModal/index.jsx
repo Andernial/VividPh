@@ -47,7 +47,7 @@ function CreateModal() {
         togglePlayer('')
         setVideoUrl(cleanUrl)
         setRenderVideo(true)
-        console.log(cleanUrl)
+
 
     }
 
@@ -65,9 +65,8 @@ function CreateModal() {
         try {
             const request = await FetchApi("POST", `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, formItem)
             uploadPost(request, title)
-            console.log(request)
         } catch (error) {
-            console.log(error)
+
         }finally{
             setRequestLoading(false)
         }
@@ -82,7 +81,7 @@ function CreateModal() {
 
             const request = await FetchApi("POST", `${apiUrl}/post/create`, data, authUser.token)
            
-            console.log(request)
+
 
             const results = request.results
 
@@ -101,7 +100,7 @@ function CreateModal() {
 
             closePostModal()
         } catch (error) {
-            console.log(error)
+
         }finally{
             setRequestLoading(false)
         }
@@ -119,6 +118,7 @@ function CreateModal() {
                     <input type="text" id="titulo" name="titulo" placeholder="escreva algo legal!" className=" p-1 boder-2 bg-slate-200 border-black rounded" />
 
                     <label htmlFor="url">Vídeo</label>
+                    <span className="text-center text-slate-400">Os links das músicas devem estar nesse formato:"https://www.youtube.com/watch?v=randomnumbers"</span>
                     <input type="text" id="url" name="url" ref={inputRef} className=" p-1 boder-2 bg-slate-200 border-black rounded" placeholder="link do vídeo" />
                     <button type="button" className=" bg-slate-300 p-1 hover:bg-slate-400" onClick={selectvideo}>Confirmar Link</button>
                     {error ? <p className=" text-red-600">{error}</p> : null}

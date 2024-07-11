@@ -20,7 +20,6 @@ function AuthProvider({children}){
         const userSession = JSON.parse(localStorage.getItem('user'))
 
         if(userSession){
-            console.log(userSession, ' o auth user foi updatado')
             setAuthUser(userSession)
             setIsLoggedin(true)
             navigate('/')

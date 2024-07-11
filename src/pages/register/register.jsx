@@ -17,14 +17,13 @@ function Register() {
         const email = registerForm.current.email.value
         const password = registerForm.current.password.value
         const userInfo = { name,email, password }
-        console.log(userInfo)
+
 
         try {
             const request = await FetchApi('POST', `${apiUrl}/user/create`, userInfo)
-            console.log(request)
             navigate('/Login')
         } catch (error) {
-            console.log(error)
+
         }finally{
             setRequestLoading(false)
         }

@@ -48,9 +48,9 @@ function Profile() {
         try {
             const request = await FetchApi("GET", `${apiUrl}/post/showUser-post/${authUser.name}`, '')
             setMyPosts(request.results)
-            console.log(request)
+
         } catch (error) {
-            console.log(error)
+
         } finally {
             setRequestLoading(false)
         }
@@ -63,15 +63,14 @@ function Profile() {
         try {
             const request = await FetchApi("GET", `${apiUrl}/user/show-by/${authUser.name}`, '')
             setMyInfo(request.results)
-            console.log(request)
+
             if (request.results && request.results.profilePic) {
-                console.log('caiu aqui')
                 const item = request.results.profilePic
                 return setAtualProfilePic(item.publicId)
             }
             setAtualProfilePic('generic')
         } catch (error) {
-            console.log(error)
+
         } finally {
             setRequestLoading(false)
         }
@@ -84,11 +83,11 @@ function Profile() {
             const object = { description: bioText }
             const request = await FetchApi("PATCH", `${apiUrl}/user/update`, object, authUser.token)
             setMyInfo(request.results)
-            console.log(request)
+
 
             handleBioEdit()
         } catch (error) {
-            console.log(error)
+
         } finally {
             setRequestLoading(false)
         }
@@ -117,9 +116,9 @@ function Profile() {
         try {
             const request = await FetchApi("POST", `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, formItem)
             uploadPost(request)
-            console.log(request)
+
         } catch (error) {
-            console.log(error)
+           
         } finally {
             setRequestLoading(false)
         }
@@ -128,18 +127,15 @@ function Profile() {
     const uploadPost = async (requestData) => {
         const data = { imageId: requestData.public_id, imageUrl: requestData.url }
         setRequestLoading(true)
-
-        console.log(data)
-
         try {
 
             const request = await FetchApi("POST", `${apiUrl}/user/create-pic`, data, authUser.token)
 
-            console.log(request)
+
             setAtualProfilePic(data.imageId)
             handleEditPhotoModal()
         } catch (error) {
-            console.log(error)
+
         } finally {
             setRequestLoading(false)
         }
@@ -229,7 +225,7 @@ function Profile() {
                             {editingBio ?
                                 <>
                                     <div className="flex flex-col">
-                                        <textarea ref={bioTextRef} className="w-full h-20 text-black p-2 border border-gray-300 rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                                        <textarea ref={bioTextRef} className="w-full h-20 text-black p-2 border border-gray-300 rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-blue-500" defaultValue={myInfo.description}></textarea>
                                         <div className="flex justify-between items-center">
                                             <IoMdClose className=" size-10 cursor-pointer m-5" onClick={handleBioEdit} />
                                             <FaPencilAlt className="size-7 cursor-pointer m-5" onClick={() => saveNewBio()} />

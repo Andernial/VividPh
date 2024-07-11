@@ -51,8 +51,8 @@ function PostModal(){
 
     return(
         <div className="fixed h-svh w-full flex flex-col items-center justify-center z-30" style={{ backgroundColor: "rgba(0, 0, 0, 0.355)" }}>
-               <div className="bg-transparent flex flex-col justify-center items-center font-extrabold text-white text-2xl shadow-sm  w-full">
-                    <div className="flex justify-end w-full p-5">
+               <div className=" bg-postBg p-2 flex flex-col justify-center items-center font-extrabold text-white text-2xl shadow-sm  w-full md:w-1/2">
+                    <div className="flex justify-end w-full p-5 md:p-0">
                         <IoMdClose className="size-9 cursor-pointer" onClick={() => handlePostModal()} />
                     </div>
                         <h1 className="">{postData.title}</h1>
@@ -60,10 +60,10 @@ function PostModal(){
                         <AdvancedImage cldImg={cld.image(`${postData.image}`).resize(auto().gravity(autoGravity()).width(500).height(500))} className="p-5" /> 
                         {renderVideo ? <YouTubeAudioPlayer videoId={postData.music} /> : null}
                         </div>
-                        <div className="w-full pl-12">
-                        <p className="text-start" onClick={()=>handleProfileClick(postData.authorName)}>{postData.authorName}</p>
-                        <div className="flex flex-row items-center gap-10">
-                            <p className="text-start">Música</p>
+                        <div className="w-full pl-12 md:pl-0">
+                        <p className="text-start md:text-center cursor-pointer" onClick={()=>handleProfileClick(postData.authorName)}>Autor: {postData.authorName}</p>
+                        <div className="flex flex-row items-center md:justify-center gap-10">
+                            <p className="text-start md:text-center">Música</p>
                             {videoPlaying === 'playing' ? <FaPause onClick={() => togglePlayer('paused')} className="cursor-pointer size-7" /> : null}
                             {videoPlaying === 'paused' ? <FaPlay onClick={() => togglePlayer('playing')} className="cursor-pointer size-7" /> : null}
                             {loadingPlayer ? (

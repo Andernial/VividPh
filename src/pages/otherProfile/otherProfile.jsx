@@ -32,20 +32,20 @@ function OtherProfile() {
     const { name } = useParams();
 
     const getImages = async () => {
-        console.log(authUser)
+
         setRequestLoading(true);
         try {
             const request = await FetchApi('GET', `${apiUrl}/post/showUser-post/${name}`, '');
             setMyPosts(request.results);
         } catch (error) {
-            console.log(error);
+
         } finally {
             setRequestLoading(false);
         }
     };
 
     const getProfileInfo = async () => {
-        console.log(authUser)
+
         setRequestLoading(true);
         try {
             const request = await FetchApi('GET', `${apiUrl}/user/show-by/${name}`, '');
@@ -57,7 +57,7 @@ function OtherProfile() {
                 setAtualProfilePic('generic');
             }
         } catch (error) {
-            console.log(error);
+
         } finally {
             setRequestLoading(false);
         }
