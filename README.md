@@ -26,7 +26,7 @@ O projeto conta também com a biblioteca react-router-dom, que permite a separa�
 * Foto de Perfil: Adicione uma imagem para representar seu perfil.
 * Bio: Escreva uma breve descrição sobre você.
 * Adicionar Post: Compartilhe fotos junto com suas músicas favoritas.
-* Visualizar Posts: Explore e interaja com as postagens de outros usuários.
+* Visualizar Posts: Visualize as postagens de outros usuários.
 * Perfis de Outros Usuários: Acesse e veja os perfis de outros membros da rede.
 
   Diversas validações de dados ainda vão ser adicionadas a inputs nas proximas atualizações.
