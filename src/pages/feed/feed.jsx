@@ -89,16 +89,15 @@ function Feed() {
 
                 </div>
           
-                    <div className={`fixed w-full flex flex-col transition duration-200 scale-100 justify-end items-end z-20 top-3/4 ${postModalOpen ? 'invisible' : null}`}>
-                        <button
-                            className="flex justify-center items-center mr-5 size-16 rounded-full transition duration-500 ease-in-out bg-white border-2 border-black hover:bg-slate-300"
-                            onClick={()=>setTimeout(()=>{
-                                handlePostModal()
-                            },400)}
-                        >
-                            <FaPlus />
-                        </button>
-                    </div>
+                   
+                <button
+                        className={`flex fixed top-96 right-0 justify-center items-center mt-56 mr-5 size-16 rounded-full transition duration-500 ease-in-out bg-white border-2 border-black hover:bg-slate-300 md:flex ${navOpen || postModalOpen ? 'hidden' : ''}`}
+                        onClick={() => setTimeout(() => {
+                            handlePostModal()
+                        }, 400)}
+                    >
+                        <FaPlus />
+                    </button>
                
             </div>
         </>

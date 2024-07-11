@@ -1,5 +1,5 @@
 import { useRef, useState } from "react"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { FetchApi } from "../../utils/Fetch"
 
 function Register() {
@@ -8,6 +8,7 @@ function Register() {
 
     const registerForm = useRef(null)
     const apiUrl = import.meta.env.VITE_API_URL
+    const navigate = useNavigate()
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -21,6 +22,7 @@ function Register() {
         try {
             const request = await FetchApi('POST', `${apiUrl}/user/create`, userInfo)
             console.log(request)
+            navigate('/Login')
         } catch (error) {
             console.log(error)
         }finally{

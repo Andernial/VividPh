@@ -77,6 +77,7 @@ function CreateModal() {
         const data = { title, youtubeUrl: videoUrl, publicId: requestData.public_id, url: requestData.url }
         setRequestLoading(true)
 
+
         try {
 
             const request = await FetchApi("POST", `${apiUrl}/post/create`, data, authUser.token)

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ModalsContext } from '../../context/ModalsContext';
 import { FetchApi } from '../../utils/Fetch';
 import LoadingPosts from '../../assets/images/loading.svg';
@@ -7,17 +7,21 @@ import { Cloudinary } from '@cloudinary/url-gen';
 import { AdvancedImage } from '@cloudinary/react';
 import { auto } from '@cloudinary/url-gen/actions/resize';
 import { autoGravity } from '@cloudinary/url-gen/qualifiers/gravity';
-import GenericProfilePic from '../../assets/images/example.jpeg';
+import GenericProfilePic from "../../assets/images/Generic-Profile-Image.png"
 import PostModal from '../../components/PostModal';
+import { useAuth } from '../../context/AuthContext';
 
 function OtherProfile() {
     const { viewPostModal, toggleViewPostModal, selectPostData, myPosts, setMyPosts } = useContext(ModalsContext);
     const [atualProfilePic, setAtualProfilePic] = useState('generic');
     const [requestLoading, setRequestLoading] = useState(false);
     const [myInfo, setMyInfo] = useState(null);
-
+    const navigate = useNavigate()
     const cloudName = import.meta.env.VITE_CLOUD_NAME;
     const apiUrl = import.meta.env.VITE_API_URL;
+    const { authUser } = useAuth()
+
+ 
 
     const cld = new Cloudinary({
         cloud: {
@@ -28,6 +32,7 @@ function OtherProfile() {
     const { name } = useParams();
 
     const getImages = async () => {
+        console.log(authUser)
         setRequestLoading(true);
         try {
             const request = await FetchApi('GET', `${apiUrl}/post/showUser-post/${name}`, '');
@@ -40,6 +45,7 @@ function OtherProfile() {
     };
 
     const getProfileInfo = async () => {
+        console.log(authUser)
         setRequestLoading(true);
         try {
             const request = await FetchApi('GET', `${apiUrl}/user/show-by/${name}`, '');
@@ -63,8 +69,15 @@ function OtherProfile() {
     };
 
     useEffect(() => {
-        getImages();
-        getProfileInfo();
+      
+        
+            
+                getImages();
+                getProfileInfo();
+            
+
+       
+      
 
         return () => {
             setMyPosts([]);

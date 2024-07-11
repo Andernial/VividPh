@@ -75,7 +75,7 @@ function Home() {
         </h1>
         <div className="w-full flex justify-center items-center">
           {requestLoading ?
-              <img src={LoadingPosts} alt="loading" className="size-64" />
+              <img src={LoadingPosts} alt="loading" className=" size-14" />
             : null}
 
 

@@ -1,4 +1,4 @@
-import GenericProfilePic from "../../assets/images/example.jpeg"
+import GenericProfilePic from "../../assets/images/Generic-Profile-Image.png"
 import { FaPlus } from "react-icons/fa";
 import { FaPencilAlt } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
@@ -14,6 +14,7 @@ import { YoutubePlayerContext } from "../../context/YoutublePlayerContext";
 import PostModal from "../../components/PostModal";
 import { FetchApi } from "../../utils/Fetch";
 import { useAuth } from "../../context/AuthContext";
+
 import LoadingPosts from "../../assets/images/loading.svg"
 
 
@@ -27,6 +28,7 @@ function Profile() {
     const [editingPhoto, setEditingPhoto] = useState(false)
     const [myInfo, setMyInfo] = useState(null)
     const [editingBio, setEditingBio] = useState(false)
+
 
 
     const bioTextRef = useRef(null);
@@ -107,7 +109,7 @@ function Profile() {
     }
 
 
-    
+
     const uploadImage = async () => {
         if (!displayFile) { return setError('Nenhuma Imagem Selecionada') }
         setRequestLoading(true)
@@ -118,13 +120,13 @@ function Profile() {
             console.log(request)
         } catch (error) {
             console.log(error)
-        }finally{
+        } finally {
             setRequestLoading(false)
         }
     }
 
     const uploadPost = async (requestData) => {
-        const data = { imageId:requestData.public_id ,imageUrl:requestData.url }
+        const data = { imageId: requestData.public_id, imageUrl: requestData.url }
         setRequestLoading(true)
 
         console.log(data)
@@ -132,13 +134,13 @@ function Profile() {
         try {
 
             const request = await FetchApi("POST", `${apiUrl}/user/create-pic`, data, authUser.token)
-           
+
             console.log(request)
             setAtualProfilePic(data.imageId)
             handleEditPhotoModal()
         } catch (error) {
             console.log(error)
-        }finally{
+        } finally {
             setRequestLoading(false)
         }
     }
@@ -174,7 +176,7 @@ function Profile() {
 
     return (
         <>
-            { editingPhoto ? (<div className="fixed h-svh w-full flex flex-col items-center justify-center z-30" style={{ backgroundColor: "rgba(0, 0, 0, 0.355)" }}>
+            {editingPhoto ? (<div className="fixed h-svh w-full flex flex-col items-center justify-center z-30" style={{ backgroundColor: "rgba(0, 0, 0, 0.355)" }}>
                 <div className="bg-white flex flex-col items-center font-extrabold text-black text-2xl shadow-sm h-96 w-full">
                     <div className="flex justify-end w-full p-5">
                         <IoMdClose className="size-9 cursor-pointer" onClick={() => handleEditPhotoModal()} />
@@ -186,17 +188,17 @@ function Profile() {
                         :
                         null}
 
-                     {atualProfilePic != 'generic' && !displayFile ?  <AdvancedImage cldImg={cld.image(`${atualProfilePic}`).resize(auto().gravity(autoGravity()).width(300).height(300))} className={`size-24 rounded-full border-2 border-black cursor-pointer`} /> : null}
+                    {atualProfilePic != 'generic' && !displayFile ? <AdvancedImage cldImg={cld.image(`${atualProfilePic}`).resize(auto().gravity(autoGravity()).width(300).height(300))} className={`size-24 rounded-full border-2 border-black cursor-pointer`} /> : null}
 
-                   
+
 
 
 
                     <input type="file" accept="image/*" className="text-sm" onChange={(e) => { selectImage(e.target.files) }} />
-                    <button className="p-1 bg-slate-300 border-1 border-black hover:bg-slate-400 disabled:opacity-75 disabled:hover:bg-slate-300 text-lg m-11 cursor-pointer" type="button" onClick={()=> uploadImage()} disabled={ !formItem || requestLoading}>Enviar</button>
+                    <button className="p-1 bg-slate-300 border-1 border-black hover:bg-slate-400 disabled:opacity-75 disabled:hover:bg-slate-300 text-lg m-11 cursor-pointer" type="button" onClick={() => uploadImage()} disabled={!formItem || requestLoading}>Enviar</button>
                 </div>
             </div>) : null}
-            
+
 
 
             {viewPostModal ? (
@@ -216,9 +218,9 @@ function Profile() {
                     {/* Conteúdo sobre a imagem */}
                     <div className="w-full flex flex-col justify-center items-center text-center text-white z-30 mt-10">
 
-                        {atualProfilePic != 'generic' ? <AdvancedImage cldImg={cld.image(`${atualProfilePic}`).resize(auto().gravity(autoGravity()).width(300).height(300))} className={`size-24 rounded-full border-2 border-black cursor-pointer`} onClick={() =>handleEditPhotoModal()} /> 
+                        {atualProfilePic != 'generic' ? <AdvancedImage cldImg={cld.image(`${atualProfilePic}`).resize(auto().gravity(autoGravity()).width(300).height(300))} className={`size-24 rounded-full border-2 border-black cursor-pointer`} onClick={() => handleEditPhotoModal()} />
                             :
-                            <img src={GenericProfilePic} alt="Foto de Perfil" className={`size-24 rounded-full border-2 border-black cursor-pointer`} onClick={() =>handleEditPhotoModal()} />}
+                            <img src={GenericProfilePic} alt="Foto de Perfil" className={`size-24 rounded-full border-2 border-black cursor-pointer`} onClick={() => handleEditPhotoModal()} />}
 
 
                         <p className="text-lg font-bold p-1">{authUser.name}</p>
@@ -251,7 +253,7 @@ function Profile() {
                 </div>
                 <div className="w-full">
                     <h1 className="text-black font-bold text-center text-2xl py-7">
-                        Minhas fotos 
+                        Minhas fotos
                     </h1>
 
                     <div className="w-full flex flex-row flex-wrap justify-center gap-5 p-5 md:z-30">
@@ -270,17 +272,17 @@ function Profile() {
 
 
                 </div>
-              
 
-                    <button
-                        className={`flex fixed top-96 right-0 justify-center items-center mt-56 mr-5 size-16 rounded-full transition duration-500 ease-in-out bg-white border-2 border-black hover:bg-slate-300 ${navOpen || postModalOpen ? 'hidden' : ''}`}
-                        onClick={() => setTimeout(() => {
-                            handlePostModal()
-                        }, 400)}
-                    >
-                        <FaPlus />
-                    </button>
-             
+
+                <button
+                    className={`flex fixed top-96 right-0 justify-center items-center mt-56 mr-5 size-16 rounded-full transition duration-500 ease-in-out bg-white border-2 border-black hover:bg-slate-300 md:flex ${navOpen || postModalOpen ? 'hidden' : ''}`}
+                    onClick={() => setTimeout(() => {
+                        handlePostModal()
+                    }, 400)}
+                >
+                    <FaPlus />
+                </button>
+
 
 
             </div>
