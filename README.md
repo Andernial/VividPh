@@ -77,4 +77,4 @@ O projeto utiliza também a api de iframe do youtube para carregar as músicas h
 **Post Aberto Pc**
 ![Open-Post](https://github.com/user-attachments/assets/1daa8784-0103-4606-ac7c-eb6a47df46ad)
 
-
+Créditos das fotos utilizadas nos exemplos: @eros__ser
