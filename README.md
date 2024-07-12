@@ -65,7 +65,7 @@ Api desenvolvida para o projeto https://github.com/Andernial/VividPh-API/tree/ma
 
 O projeto utiliza também a api de iframe do youtube para carregar as músicas https://www.youtube.com/iframe_api
 
-## Resultados
+## Resultados 📃
 **Home Pc**
 ![Home-pc](https://github.com/user-attachments/assets/187e9018-4b60-4971-91b8-d0976e4e22a4)
 
